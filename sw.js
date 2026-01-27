@@ -1,4 +1,4 @@
-const CACHE_NAME = "breeder285-v5";
+const CACHE_NAME = "breeder285-v6";
 const urlsToCache = [
   "./",
   "./index.html",
