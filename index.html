@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>繁殖農家285｜分娩予定日計算</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111111">
+
+<style>
+body{
+  margin:0;
+  font-family:"Hiragino Kaku Gothic ProN", sans-serif;
+  background:#111;
+  color:white;
+  text-align:center;
+}
+
+.header{
+  padding:20px;
+  font-size:22px;
+  font-weight:bold;
+  background:#000;
+}
+
+.container{
+  padding:30px 20px;
+}
+
+input{
+  padding:12px;
+  font-size:18px;
+  width:90%;
+  margin:20px 0;
+  border-radius:8px;
+  border:none;
+}
+
+button{
+  padding:12px 20px;
+  font-size:18px;
+  border:none;
+  border-radius:8px;
+  background:#e60012;
+  color:white;
+}
+
+.result{
+  margin-top:30px;
+  font-size:18px;
+  line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+繁殖農家285
+</div>
+
+<div class="container">
+<p>種付日を入力してください</p>
+<input type="date" id="startDate">
+<br>
+<button onclick="calculate()">分娩予定日を計算</button>
+<div class="result" id="result"></div>
+</div>
+
+<script>
+function calculate(){
+  const input=document.getElementById("startDate").value;
+  if(!input){ alert("日付を入力してください"); return; }
+
+  const start=new Date(input);
+  const due=new Date(start);
+  due.setDate(start.getDate()+285);
+
+  const cautionStart=new Date(due);
+  cautionStart.setDate(due.getDate()-5);
+
+  const cautionEnd=new Date(due);
+  cautionEnd.setDate(due.getDate()+5);
+
+  function f(d){
+    return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
+  }
+
+  document.getElementById("result").innerHTML=
+  "分娩予定日："+f(due)+"<br><br>"+
+  "注意期間："+f(cautionStart)+" ～ "+f(cautionEnd);
+}
+
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html>
