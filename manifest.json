@@ -1,10 +1,11 @@
 {
-  "name": "繁殖農家285",
-  "short_name": "285",
+  "name": "繁殖農家285｜分娩予定日計算",
+  "short_name": "繁殖農家285",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#111111",
   "theme_color": "#111111",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "icon-192.png",
