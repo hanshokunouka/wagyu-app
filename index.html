@@ -48,8 +48,12 @@ button{
 
 .result{
   margin-top:30px;
-  font-size:18px;
   line-height:1.6;
+}
+
+.due-date{
+  font-size:40px;
+  font-weight:bold;
 }
 </style>
 </head>
@@ -77,19 +81,12 @@ function calculate(){
   const due=new Date(start);
   due.setDate(start.getDate()+285);
 
-  const cautionStart=new Date(due);
-  cautionStart.setDate(due.getDate()-5);
-
-  const cautionEnd=new Date(due);
-  cautionEnd.setDate(due.getDate()+5);
-
   function f(d){
     return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
   }
 
   document.getElementById("result").innerHTML=
-  "分娩予定日："+f(due)+"<br><br>"+
-  "注意期間："+f(cautionStart)+" ～ "+f(cautionEnd);
+  "分娩予定日：<br><div class='due-date'>"+f(due)+"</div>";
 }
 
 if("serviceWorker" in navigator){
