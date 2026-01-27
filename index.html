@@ -37,13 +37,23 @@ input{
   border:none;
 }
 
-button:hover{
+button{
   padding:12px 20px;
   font-size:18px;
   border:none;
   border-radius:8px;
-  background:#e67e00;
+  background:#ff9800; /* オレンジ色に変更 */
   color:white;
+  cursor:pointer;
+  transition: background 0.1s; /* 反応を良くするために少し早めに設定 */
+  outline: none;
+  -webkit-tap-highlight-color: transparent; /* スマホ特有の青い枠を消す */
+}
+
+/* 押下した際のスタイル */
+button:active {
+  background:#e68a00; /* 少し濃いオレンジ色 */
+  transform: scale(0.97); /* 押し込んだような動きを追加 */
 }
 
 .result{
