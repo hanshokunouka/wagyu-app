@@ -1,23 +1,29 @@
-const CACHE_NAME = "breeder285-v11";
+const CACHE_NAME = "breeder285-v12";
+
 const urlsToCache = [
   "./",
   "./index.html",
-  "./manifest.json"
+  "./manifest.json",
+  "./icon-192.png",
+  "./icon-512.png"
 ];
 
-self.addEventListener("install", function (event) {
+// インストール時にキャッシュ保存
+self.addEventListener("install", function(event) {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        return cache.addAll(urlsToCache);
+      })
   );
 });
 
-self.addEventListener("activate", function (event) {
+// 古いキャッシュ削除
+self.addEventListener("activate", function(event) {
   event.waitUntil(
-    caches.keys().then(function (cacheNames) {
+    caches.keys().then(function(cacheNames) {
       return Promise.all(
-        cacheNames.map(function (cacheName) {
+        cacheNames.map(function(cacheName) {
           if (cacheName !== CACHE_NAME) {
             return caches.delete(cacheName);
           }
@@ -27,10 +33,12 @@ self.addEventListener("activate", function (event) {
   );
 });
 
-self.addEventListener("fetch", function (event) {
+// オフライン対応
+self.addEventListener("fetch", function(event) {
   event.respondWith(
-    caches.match(event.request).then(function (response) {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request)
+      .then(function(response) {
+        return response || fetch(event.request);
+      })
   );
 });
