@@ -4,14 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>繁殖農家285｜分娩予定日計算</title>
-
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#111111">
 
 <style>
 body{
   margin:0;
-  font-family:"Hiragino Kaku Gothic ProN", sans-serif;
+  font-family:"Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
   background:#111;
   color:white;
   text-align:center;
@@ -19,53 +18,95 @@ body{
 
 .header{
   padding:20px;
-  font-size:22px;
+  font-size:20px;
   font-weight:bold;
   background:#000;
+  border-bottom: 2px solid #e60012;
 }
 
 .container{
-  padding:30px 20px;
+  padding:20px;
+}
+
+.label-text {
+  font-size: 14px;
+  color: #bbb;
+  margin-bottom: 8px;
 }
 
 input{
-  padding:12px;
-  font-size:18px;
+  padding:15px;
+  font-size:20px;
   width:90%;
-  margin:20px 0;
-  border-radius:8px;
+  max-width:300px;
+  margin-bottom: 20px;
+  border-radius:10px;
   border:none;
 }
 
 button{
-  padding:12px 20px;
-  font-size:18px;
+  padding:18px 40px;
+  font-size:20px;
   border:none;
-  border-radius:8px;
+  border-radius:50px;
   background:#e60012;
   color:white;
+  font-weight:bold;
+  box-shadow: 0 4px 0 #8b0000;
+  cursor: pointer;
+  width: 90%;
+  max-width:300px;
 }
 
-.result{
+button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #8b0000;
+}
+
+/* 結果表示エリア：ここを大きく強調 */
+.result-card {
   margin-top:30px;
-  font-size:18px;
-  line-height:1.6;
+  padding:30px 10px;
+  background:#1a1a1a;
+  border: 2px solid #444;
+  border-radius:20px;
+  display: none;
+}
+
+/* 日付部分を最大級に */
+.due-date {
+  font-size: 38px; /* 視認性を極限まで高めたサイズ */
+  font-weight: 900;
+  color: #ff3333;
+  display: block;
+  margin: 15px 0;
+  letter-spacing: -1px; /* 数字の間隔を詰めて力強く */
+}
+
+.congrats {
+  font-size: 20px;
+  color: #f1c40f;
+  font-weight: bold;
+  margin-top: 15px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-繁殖農家285
-</div>
+<div class="header">繁殖農家285</div>
 
 <div class="container">
-<p>種付日を入力してください</p>
-<input type="date" id="startDate">
-<br>
-<button onclick="calculate()">分娩予定日を計算</button>
-<div class="result" id="result"></div>
+  <p class="label-text">種付日を入力</p>
+  <input type="date" id="startDate">
+  <br>
+  <button onclick="calculate()">計算する</button>
+
+  <div class="result-card" id="resultCard">
+    <div class="label-text">分娩予定日</div>
+    <span class="due-date" id="dueDisplay"></span>
+    <div class="congrats">🎉 おめでとうございます！</div>
+  </div>
 </div>
 
 <script>
@@ -77,19 +118,22 @@ function calculate(){
   const due=new Date(start);
   due.setDate(start.getDate()+285);
 
-  const cautionStart=new Date(due);
-  cautionStart.setDate(due.getDate()-5);
+  const y = due.getFullYear();
+  const m = due.getMonth() + 1;
+  const d = due.getDate();
+  const day = ["日","月","火","水","木","金","土"][due.getDay()];
 
-  const cautionEnd=new Date(due);
-  cautionEnd.setDate(due.getDate()+5);
-
-  function f(d){
-    return d.getFullYear()+"年"+(d.getMonth()+1)+"月"+d.getDate()+"日";
-  }
-
-  document.getElementById("result").innerHTML=
-  "分娩予定日："+f(due)+"<br><br>"+
-  "注意期間："+f(cautionStart)+" ～ "+f(cautionEnd);
+  // 結果を表示
+  document.getElementById("dueDisplay").innerHTML = 
+    `<span style="font-size:22px; color:#fff;">${y}年</span><br>${m}月${d}日<span style="font-size:24px;">(${day})</span>`;
+  
+  document.getElementById("resultCard").style.display = "block";
+  
+  // スマホで計算結果まで自動スクロール（親切設計）
+  window.scrollTo({
+    top: document.getElementById("resultCard").offsetTop,
+    behavior: 'smooth'
+  });
 }
 
 if("serviceWorker" in navigator){
