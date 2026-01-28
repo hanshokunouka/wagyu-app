@@ -17,11 +17,24 @@ body{
   text-align:center;
 }
 
+/* ヘッダー */
 .header{
-  padding:20px;
+  padding:15px 20px;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+}
+
+.header img{
+  width:36px;
+  height:36px;
+}
+
+.header-title{
   font-size:22px;
   font-weight:bold;
-  background:#000;
 }
 
 .container{
@@ -44,16 +57,27 @@ button{
   border-radius:8px;
   background:#e60012;
   color:white;
+  cursor:pointer;
+  box-shadow: 0 4px 0 #90000a;
+  transition: all 0.1s ease;
+}
+
+button:active{
+  background:#b8000e;
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #90000a;
 }
 
 .result{
   margin-top:30px;
+  font-size:18px;
   line-height:1.6;
 }
 
 .due-date{
   font-size:40px;
   font-weight:bold;
+  margin-top:15px;
 }
 </style>
 </head>
@@ -61,7 +85,8 @@ button{
 <body>
 
 <div class="header">
-繁殖農家285
+  <img src="icon-192.png" alt="logo">
+  <div class="header-title">繁殖農家285</div>
 </div>
 
 <div class="container">
@@ -86,7 +111,8 @@ function calculate(){
   }
 
   document.getElementById("result").innerHTML=
-  "分娩予定日：<br><div class='due-date'>"+f(due)+"</div>";
+    "分娩予定日：" +
+    "<div class='due-date'>" + f(due) + "</div>";
 }
 
 if("serviceWorker" in navigator){
