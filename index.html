@@ -19,20 +19,25 @@ body{
 
 /* ヘッダー */
 .header{
+  position:relative;
   padding:15px 20px;
   background:#000;
+  height:60px;
   display:flex;
   align-items:center;
-  justify-content:center;
-  gap:12px;
 }
 
+/* 左の画像 */
 .header img{
   width:36px;
   height:36px;
 }
 
+/* 中央固定タイトル */
 .header-title{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
   font-size:22px;
   font-weight:bold;
 }
